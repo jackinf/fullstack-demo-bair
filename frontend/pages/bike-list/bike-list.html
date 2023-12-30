@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Bikes</title>
+
+    <link rel="stylesheet" href="bike-list.css">
+</head>
+<body>
+    <div class="bikes-action-wrapper">
+        <a href="../add-bike/add-bike.html" class="add-new-bike-link">Add new bike</a>
+    </div>
+
+    <div class="bikes-table-wrapper">
+        <table id="bikes" class="bikes-table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Year</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody id="bikes-body">
+            </tbody>
+        </table>
+    </div>
+
+    <script src="bike-list.js"></script>
+</body>
+</html>

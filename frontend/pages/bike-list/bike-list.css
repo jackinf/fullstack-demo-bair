@@ -1,0 +1,64 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.bikes-action-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 1em;
+}
+
+.add-new-bike-link {
+    text-decoration: none;
+    color: white;
+    background-color: #4CAF50;
+    padding: 0.5em 1em;
+    border-radius: 0.5em;
+}
+
+.bikes-table-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.bikes-table {
+    border: 1px solid #ededed;
+    padding: 2em;
+}
+
+.bikes-table th {
+    text-align: center;
+}
+
+.bikes-table th, .bikes-table td {
+    padding: 1em;
+}
+
+.btn {
+    border: none;
+    color: white;
+    padding: 0.5em 1em;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1em;
+    margin: 0.5em 0.5em;
+    cursor: pointer;
+}
+
+.btn:hover {
+    opacity: 0.8;
+
+    -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+
+}
+
+.btn-primary {
+    background-color: #4CAF50;
+}
+
+.btn-danger {
+    background-color: #f44336;
+}

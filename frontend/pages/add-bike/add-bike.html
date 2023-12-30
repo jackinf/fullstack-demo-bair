@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add new Bike</title>
+    <link rel="stylesheet" href="add-bike.css">
+</head>
+<body>
+    <a href="../bike-list/bike-list.html">Go back</a>
+    <h1 class="title">Add new Bike</h1>
+    <!-- prevent default -->
+    <form onsubmit="addBike(event)" action="" class="bike-form">
+        <label for="brand">Brand</label>
+        <input type="text" name="brand" id="brand">
+        <br>
+        <label for="model">Model</label>
+        <input type="text" name="model" id="model">
+        <br>
+        <label for="year">Year</label>
+        <input type="number" name="year" id="year">
+        <br>
+        <label for="price">Price</label>
+        <input type="number" name="price" id="price">
+        <br>
+        <button type="submit" class="save-btn">Save</button>
+    </form>
+
+    <script src="add-bike.js"></script>
+
+</body>
+</html>
