@@ -2,7 +2,7 @@
 const bikesBody = document.getElementById('bikes-body');
 
 // get the bike-list from the backend
-fetch('http://localhost:8000/api/bikes')
+fetch(`${window.Bikes.config.backendUrl}/api/bikes`)
     .then(response => response.json())
     .then(bikes => {
         // loop through the bike-list

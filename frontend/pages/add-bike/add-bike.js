@@ -10,7 +10,7 @@ function addBike(event) {
         price: form.price.value
     };
 
-    fetch('http://localhost:8000/api/bikes', {
+    fetch(`${window.Bikes.config.backendUrl}/api/bikes`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

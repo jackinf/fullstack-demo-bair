@@ -1,0 +1,27 @@
+runtime: nodejs18
+service: bikes-frontend
+
+handlers:
+  - url: /
+    static_files: index.html
+    upload: index.html
+
+  - url: /pages/add-bike/(.*\.(css|html|js))
+    static_files: pages/add-bike/\1
+    upload: pages/add-bike/.*\.(css|html|js)
+
+  - url: /pages/bike-list/(.*\.(css|html|js))
+    static_files: pages/bike-list/\1
+    upload: pages/bike-list/.*\.(css|html|js)
+
+  - url: /pages/edit-bike/(.*\.(css|html|js))
+    static_files: pages/edit-bike/\1
+    upload: pages/edit-bike/.*\.(css|html|js)
+
+  - url: /(.*\.(ico|png|jpg|css|js|json|html))
+    static_files: \1
+    upload: .*\.(ico|png|jpg|css|js|json|html)
+
+  - url: /.*
+    static_files: index.html
+    upload: index.html

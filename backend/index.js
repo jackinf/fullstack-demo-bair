@@ -11,6 +11,11 @@ app.use(bodyParser.json());
 
 const mongoConnectionString = process.env.MONGO_CONNECTION_STRING;
 
+// app.get('/liveness_check', (req, res) => res.status(200).send('OK'));
+// app.get('/readiness_check', (req, res) => res.status(200).send('OK'));
+
+app.get('/', (req, res) => res.send('Welcome to the Bikes API!'));
+
 // CREATE
 app.post('/api/bikes', async (req, res) => {
     const bike = req.body;
@@ -89,5 +94,5 @@ app.delete('/api/bikes/:id', async (req, res) => {
     res.send(result);
 });
 
-const port = 8000;
+const port = process.env.PORT || 8000;
 app.listen(port, () => console.log(`Server listening on port ${port}!`));

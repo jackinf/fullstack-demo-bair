@@ -3,7 +3,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const bikeId = urlParams.get('id');
 
 // get the bike from the backend
-fetch(`http://localhost:8000/api/bikes/${bikeId}`)
+fetch(`${window.Bikes.config.backendUrl}/api/bikes/${bikeId}`)
     .then(response => response.json())
     .then(bike => {
         // set the values for the form
@@ -27,7 +27,7 @@ function editBike(event) {
     };
 
     // send the bike to the backend
-    fetch(`http://localhost:8000/api/bikes/${bikeId}`, {
+    fetch(`${window.Bikes.config.backendUrl}/api/bikes/${bikeId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
