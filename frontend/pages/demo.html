@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <button id="main-button">Click me</button>
+
+    <input type="text" name="name" id="lol">
+
+    <div id="target"></div>
+    <div id="target2"></div>
+    <div id="target3"></div>
+
+    <script>
+        function printHelloWorld() {
+            alert('Hello world!');
+            // console.log('Hello world!');
+        }
+
+        const button = document.getElementById('main-button');
+        console.log('button is being printed');
+        console.log(button);
+
+        button.onclick = printHelloWorld;
+        button.addEventListener('click', printHelloWorld);
+
+        const input = document.getElementById('lol');
+        const target = document.getElementById('target');
+        const target2 = document.getElementById('target2');
+        const target3 = document.getElementById('target3');
+        input.addEventListener('keyup', function (event) {
+            // console.log(event);
+            console.log(event.target.value);
+            target.innerText = event.target.value;
+            target2.innerText = event.target.value;
+            target3.innerText = event.target.value;
+
+            if (event.target.value === "password") {
+                alert('You are not allowed to enter this password');
+            }
+        });
+    </script>
+</body>
+</html>
