@@ -2,7 +2,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const bcrypt = require('bcrypt');
 const { MongoClient, ObjectId } = require('mongodb');
+const jwt = require('jsonwebtoken');
+const { authenticateToken } = require("./middlewares");
 require('dotenv').config();
 
 const app = express();
@@ -39,7 +42,7 @@ app.post('/api/bikes', async (req, res) => {
 });
 
 // GET
-app.get('/api/bikes', async (req, res) => {
+app.get('/api/bikes', authenticateToken, async (req, res) => {
     const client = await MongoClient.connect(mongoConnectionString);
     const db = client.db('bikes');
     const result = await db.collection('data').find().toArray();
@@ -92,6 +95,57 @@ app.delete('/api/bikes/:id', async (req, res) => {
     const result = await db.collection('data').deleteOne({ _id: new ObjectId(id) });
 
     res.send(result);
+});
+
+/*
+    * Authentication
+ */
+
+app.post('/register', async (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+
+    if (!username || typeof username !== 'string' || username.trim() === '') {
+        return res.status(400).send('Invalid username');
+    }
+
+    if (!password || typeof password !== 'string' || password.length < 6) {
+        return res.status(400).send('Password must be at least 6 characters long');
+    }
+
+    try {
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const client = await MongoClient.connect(mongoConnectionString);
+        const db = client.db('bikes');
+        const usersCollection = db.collection('users');
+        await usersCollection.insertOne({
+            username,
+            password: hashedPassword
+        });
+        res.status(201).send('User created');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error registering new user');
+    }
+});
+
+app.post('/login', async (req, res) => {
+    try {
+        const client = await MongoClient.connect(mongoConnectionString);
+        const db = client.db('bikes');
+        const usersCollection = db.collection('users');
+        const user = await usersCollection.findOne({ username: req.body.username });
+        if (user && await bcrypt.compare(req.body.password, user.password)) {
+            const accessToken = jwt.sign({ username: user.username }, process.env.ACCESS_TOKEN_SECRET);
+            res.json({ accessToken: accessToken });
+        } else {
+            res.status(400).send('Login Failed');
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error logging in user');
+    }
 });
 
 const port = process.env.PORT || 8000;

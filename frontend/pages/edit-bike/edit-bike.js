@@ -3,8 +3,18 @@ const urlParams = new URLSearchParams(window.location.search);
 const bikeId = urlParams.get('id');
 
 // get the bike from the backend
-fetch(`${window.Bikes.config.backendUrl}/api/bikes/${bikeId}`)
-    .then(response => response.json())
+fetch(`${window.Bikes.config.backendUrl}/api/bikes/${bikeId}`, {
+    headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+    }
+})
+    .then(response => {
+        if (response.status === 401) {
+            window.location.href = '../login/login.html';
+            throw new Error('Not authenticated');
+        }
+        return response.json();
+    })
     .then(bike => {
         // set the values for the form
         document.getElementById('brand').value = bike.brand;
@@ -30,12 +40,19 @@ function editBike(event) {
     fetch(`${window.Bikes.config.backendUrl}/api/bikes/${bikeId}`, {
         method: 'PUT',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify(bike)
     })
-        .then(response => response.json())
-        .then(bike => {
+        .then(response => {
+            if (response.status === 401) {
+                window.location.href = '../login/login.html';
+                throw new Error('Not authenticated');
+            }
+            return response.json();
+        })
+        .then(() => {
             // redirect to the bikes page
             window.location.href = '../bike-list/bike-list.html';
         });

@@ -2,8 +2,18 @@
 const bikesBody = document.getElementById('bikes-body');
 
 // get the bike-list from the backend
-fetch(`${window.Bikes.config.backendUrl}/api/bikes`)
-    .then(response => response.json())
+fetch(`${window.Bikes.config.backendUrl}/api/bikes`, {
+    headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+    }
+})
+    .then(response => {
+        if (response.status === 401) {
+            window.location.href = '../login/login.html';
+            throw new Error('Not authenticated');
+        }
+        return response.json();
+    })
     .then(bikes => {
         // loop through the bike-list
         bikes.forEach(bike => {
@@ -42,9 +52,18 @@ fetch(`${window.Bikes.config.backendUrl}/api/bikes`)
                 if (confirm(`Are you sure you want to delete ${bike.brand} ${bike.model}?`) === true) {
                     // delete the bike
                     fetch(`http://localhost:8000/api/bikes/${bike._id}`, {
-                        method: 'DELETE'
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        }
                     })
-                        .then(response => response.json())
+                        .then(response => {
+                            if (response.status === 401) {
+                                window.location.href = '../login/login.html';
+                                throw new Error('Not authenticated');
+                            }
+                            return response.json();
+                        })
                         .then(() => {
                             // remove the row from the table
                             row.remove();
